@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Project 1</string>
+
+    <string name="cd_movie_image">Movie image</string>
+
+    <string name="msg_error_get_movies">Search movies error. Try again later!</string>
+    <string name="msg_error_get_config">Load API configurations error. Try again later!</string>
+</resources>

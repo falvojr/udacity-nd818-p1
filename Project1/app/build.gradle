@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "com.falvojr.nd818.p1"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions.enabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// Dependencies versions (global ext properties)
+ext {
+    supportVersion = '25.3.1'
+    rxJavaVersion = '2.1.0'
+    rxAndroidVersion = '2.0.1'
+    retrofitVersion = '2.3.0'
+    okhttpVersion = '3.8.0'
+    picassoVersion = '2.5.2'
+
+    espressoVersion = '2.2.2'
+    junitVersion = '4.12'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Support dependencies (native)
+    compile "com.android.support:appcompat-v7:${supportVersion}"
+    compile "com.android.support:design:${supportVersion}"
+    compile "com.android.support:recyclerview-v7:${supportVersion}"
+    compile "com.android.support:cardview-v7:${supportVersion}"
+
+    // RxJava/RxAndroid (by ReactiveX)
+    compile "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    compile "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+
+    // Retrofit (by Square)
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+
+    // OkHttp (by Square)
+    compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
+
+    // Picasso (by Square)
+    compile "com.squareup.picasso:picasso:${picassoVersion}"
+
+    // Test dependencies (native)
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile "junit:junit:${junitVersion}"
+}
