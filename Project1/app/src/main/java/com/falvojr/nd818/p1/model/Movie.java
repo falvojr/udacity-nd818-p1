@@ -11,6 +11,11 @@ import java.util.Date;
  */
 public class Movie {
 
+    public enum Sort {
+        POPULAR,
+        TOP_RATED
+    }
+
     @SerializedName("original_title")
     private String originalTitle;
 

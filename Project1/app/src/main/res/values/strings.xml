@@ -1,8 +1,19 @@
 <resources>
+    <!-- App name -->
     <string name="app_name">Project 1</string>
 
+    <!-- Shared Preferences -->
+    <string name="sp_file_key">com.falvojr.nd818.p1</string>
+
+    <!-- Content Descriptions-->
     <string name="cd_movie_image">Movie image</string>
 
+    <!-- Messages -->
     <string name="msg_error_get_movies">Search movies error. Try again later!</string>
     <string name="msg_error_get_config">Load API configurations error. Try again later!</string>
+
+    <!-- Menu titles -->
+    <string name="menu_sort">Sort</string>
+    <string name="menu_popular">Popular</string>
+    <string name="menu_top_rated">Top-rated</string>
 </resources>

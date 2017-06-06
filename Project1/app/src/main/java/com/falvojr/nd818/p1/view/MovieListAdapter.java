@@ -20,9 +20,7 @@ import java.util.List;
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
 
     public interface OnItemListener {
-        void onLoadPosterImage(final ImageView ivPoster, final String posterPath);
-
-        void onClick(final Movie movie);
+        void onBindImageView(final ImageView imageView, final Movie movie);
     }
 
     private List<Movie> mDataSet;
@@ -52,8 +50,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Movie movie = mDataSet.get(position);
         if (mOnItemListener != null) {
-            mOnItemListener.onLoadPosterImage(holder.ivPoster, movie.getPosterPath());
-            holder.itemView.setOnClickListener(v -> mOnItemListener.onClick(movie));
+            mOnItemListener.onBindImageView(holder.ivPoster, movie);
         }
     }
 
