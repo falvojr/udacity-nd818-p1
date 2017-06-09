@@ -4,10 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Config images from TMDb API.
- *
+ * <p>
  * Created by falvojr on 6/4/17.
  */
 public class ConfigImages {
+
     @SerializedName("base_url")
     private String baseUrl;
 

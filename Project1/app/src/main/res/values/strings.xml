@@ -7,6 +7,7 @@
 
     <!-- Content Descriptions-->
     <string name="cd_movie_image">Movie image</string>
+    <string name="cd_toolbar_background">Toolbar background</string>
 
     <!-- Messages -->
     <string name="msg_error_get_movies">Search movies error. Try again later!</string>

@@ -14,9 +14,16 @@
         <activity android:name=".view.MovieListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.MovieActivity"
+            android:parentActivityName=".view.MovieListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.falvojr.nd818.p1.view.MovieListActivity" />
         </activity>
     </application>
 

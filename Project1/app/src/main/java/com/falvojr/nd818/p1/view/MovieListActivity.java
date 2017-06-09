@@ -1,9 +1,10 @@
 package com.falvojr.nd818.p1.view;
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -11,16 +12,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.falvojr.nd818.p1.R;
+import com.falvojr.nd818.p1.infra.TMDbService;
 import com.falvojr.nd818.p1.model.Movie;
 import com.falvojr.nd818.p1.model.MovieList;
-import com.falvojr.nd818.p1.service.TMDbService;
 import com.falvojr.nd818.p1.view.base.BaseActivity;
+import com.falvojr.nd818.p1.view.widget.MovieListAdapter;
 import com.squareup.picasso.Picasso;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * Movie list activity.
+ * <p>
+ * Created by falvojr on 6/5/17.
+ */
 public class MovieListActivity extends BaseActivity {
 
     private static final String TAG = MovieListActivity.class.getSimpleName();
@@ -34,11 +41,11 @@ public class MovieListActivity extends BaseActivity {
         Picasso.with(MovieListActivity.this).load(imageUrl).into(imageView);
 
         imageView.setOnClickListener(v -> {
-            //TODO Detail movie here!
+            final Intent intent = new Intent(this, MovieActivity.class);
+            intent.putExtra(MovieActivity.KEY_MOVIE, movie);
+            super.startActivity(intent);
         });
     };
-
-    private Movie.Sort mMovieSort = Movie.Sort.POPULAR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,7 @@ public class MovieListActivity extends BaseActivity {
         if (mAdapter == null) {
             this.loadConfigImages();
         } else {
-            mRecyclerView.setLayoutManager(getBestLayoutManager());
+            mRecyclerView.setLayoutManager(this.getBestLayoutManager());
         }
     }
 
@@ -80,7 +87,7 @@ public class MovieListActivity extends BaseActivity {
     private void loadMovies() {
         final TMDbService.Api api = TMDbService.getInstance().getApi();
         final Observable<MovieList> call;
-        if (Movie.Sort.POPULAR.equals(mMovieSort)) {
+        if (this.isPopularSort()) {
             call = api.getPopularMovies(super.getApiKey());
         } else {
             call = api.getTopRatedMovies(super.getApiKey());
@@ -116,9 +123,15 @@ public class MovieListActivity extends BaseActivity {
         Snackbar.make(mRecyclerView, businessMessage, Snackbar.LENGTH_LONG).show();
     }
 
+    private boolean isPopularSort() {
+        return Movie.Sort.POPULAR.name().equals(super.getSort());
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.getMenuInflater().inflate(R.menu.main, menu);
+        final int id = this.isPopularSort() ? R.id.mPopular : R.id.mTopRated;
+        menu.findItem(id).setChecked(true);
         return true;
     }
 
@@ -126,17 +139,16 @@ public class MovieListActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mPopular:
-                mMovieSort = Movie.Sort.POPULAR;
-                this.loadConfigImages();
-                item.setChecked(!item.isChecked());
-                return true;
+                super.putSort(Movie.Sort.POPULAR);
+                break;
             case R.id.mTopRated:
-                mMovieSort = Movie.Sort.TOP_RATED;
-                this.loadConfigImages();
-                item.setChecked(!item.isChecked());
-                return true;
+                super.putSort(Movie.Sort.TOP_RATED);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        this.loadConfigImages();
+        item.setChecked(!item.isChecked());
+        return true;
     }
 }

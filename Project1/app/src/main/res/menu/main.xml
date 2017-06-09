@@ -9,8 +9,7 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/mPopular"
-                    android:title="@string/menu_popular"
-                    android:checked="true"/>
+                    android:title="@string/menu_popular"/>
                 <item
                     android:id="@+id/mTopRated"
                     android:title="@string/menu_top_rated" />

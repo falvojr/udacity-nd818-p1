@@ -1,4 +1,4 @@
-package com.falvojr.nd818.p1.view;
+package com.falvojr.nd818.p1.view.widget;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

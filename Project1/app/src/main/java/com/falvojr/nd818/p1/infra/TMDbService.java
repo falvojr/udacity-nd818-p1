@@ -1,4 +1,4 @@
-package com.falvojr.nd818.p1.service;
+package com.falvojr.nd818.p1.infra;
 
 import com.falvojr.nd818.p1.model.Config;
 import com.falvojr.nd818.p1.model.Movie;
@@ -82,7 +82,7 @@ public class TMDbService {
     }
 
     private static class TMDbServiceHolder {
-        public static final TMDbService INSTANCE = new TMDbService();
+        static final TMDbService INSTANCE = new TMDbService();
     }
 
     public static TMDbService getInstance() {

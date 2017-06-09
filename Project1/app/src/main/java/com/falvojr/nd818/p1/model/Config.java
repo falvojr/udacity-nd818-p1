@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Config root response from TMDb API.
- *
+ * <p>
  * Created by falvojr on 6/4/17.
  */
 public class Config {

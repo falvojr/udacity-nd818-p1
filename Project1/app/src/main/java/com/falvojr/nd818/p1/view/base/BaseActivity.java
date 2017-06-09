@@ -7,15 +7,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.falvojr.nd818.p1.R;
+import com.falvojr.nd818.p1.model.Movie;
 
 /**
  * Base activity with common features.
- *
+ * <p>
  * Created by falvojr on 6/4/17.
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private static final String KEY_IMAGES_BASE_URL = "";
+    private static final String KEY_IMAGES_BASE_URL = "Project1.ConfigImages.baseUrl";
+    private static final String KEY_SORT = "Project1.Movie.Sort";
 
     private String mApiKey;
     private SharedPreferences mSharedPrefs;
@@ -40,5 +42,14 @@ public class BaseActivity extends AppCompatActivity {
 
     protected String getImagesBaseUrl() {
         return mSharedPrefs.getString(KEY_IMAGES_BASE_URL, "");
+    }
+
+
+    protected void putSort(Movie.Sort sort) {
+        mSharedPrefs.edit().putString(KEY_SORT, sort.name()).apply();
+    }
+
+    protected String getSort() {
+        return mSharedPrefs.getString(KEY_SORT, Movie.Sort.POPULAR.name());
     }
 }

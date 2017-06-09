@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4CAF50</color>      <!-- Material Color Palette: 500 -->
-    <color name="colorPrimaryDark">#388E3C</color>  <!-- Material Color Palette: 700 -->
-    <color name="colorAccent">#7C4DFF</color>       <!-- Material Color Palette: A200 -->
+    <color name="colorPrimary">#673AB7</color>      <!-- Material Color Palette: 500 -->
+    <color name="colorPrimaryDark">#512DA8</color>  <!-- Material Color Palette: 700 -->
+    <color name="colorAccent">#448AFF</color>       <!-- Material Color Palette: A200 -->
 </resources>

@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Movie list response from TMDb API.
- *
+ * <p>
  * Created by falvojr on 6/4/17.
  */
 public class MovieList {
