@@ -1,12 +1,12 @@
-package com.falvojr.nd818.p1.view;
+package com.falvojr.nd818.p2.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
-import com.falvojr.nd818.p1.R;
-import com.falvojr.nd818.p1.databinding.ActivityMovieBinding;
-import com.falvojr.nd818.p1.model.Movie;
-import com.falvojr.nd818.p1.view.base.BaseActivity;
+import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.databinding.ActivityMovieBinding;
+import com.falvojr.nd818.p2.model.Movie;
+import com.falvojr.nd818.p2.view.base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;

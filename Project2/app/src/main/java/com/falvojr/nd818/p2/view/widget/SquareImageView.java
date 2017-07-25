@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.falvojr.nd818.p1.view.widget;
+package com.falvojr.nd818.p2.view.widget;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;

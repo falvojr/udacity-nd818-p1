@@ -1,4 +1,4 @@
-package com.falvojr.nd818.p1.view;
+package com.falvojr.nd818.p2.view;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,13 +10,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.falvojr.nd818.p1.R;
-import com.falvojr.nd818.p1.databinding.ActivityMainBinding;
-import com.falvojr.nd818.p1.infra.TMDbService;
-import com.falvojr.nd818.p1.model.Movie;
-import com.falvojr.nd818.p1.model.MovieList;
-import com.falvojr.nd818.p1.view.base.BaseActivity;
-import com.falvojr.nd818.p1.view.widget.MovieListAdapter;
+import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.databinding.ActivityMainBinding;
+import com.falvojr.nd818.p2.infra.TMDbService;
+import com.falvojr.nd818.p2.model.Movie;
+import com.falvojr.nd818.p2.model.MovieList;
+import com.falvojr.nd818.p2.view.base.BaseActivity;
+import com.falvojr.nd818.p2.view.widget.MovieListAdapter;
 import com.squareup.picasso.Picasso;
 
 import io.reactivex.Observable;
@@ -91,7 +91,7 @@ public class MovieListActivity extends BaseActivity {
                     if (mAdapter == null) {
                         this.initAdapter(resp);
                     } else {
-                        this.refreshAdapter(resp);
+                        this.updateAdapter(resp);
                     }
                     mBinding.rvMovies.setLayoutManager(getBestLayoutManager());
                     mBinding.srlMovies.setRefreshing(false);
@@ -100,7 +100,7 @@ public class MovieListActivity extends BaseActivity {
                 });
     }
 
-    private void refreshAdapter(MovieList resp) {
+    private void updateAdapter(MovieList resp) {
         mAdapter.setDataSet(resp.getData());
         mAdapter.notifyDataSetChanged();
     }

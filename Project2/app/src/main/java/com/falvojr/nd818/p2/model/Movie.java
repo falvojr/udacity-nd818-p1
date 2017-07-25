@@ -1,4 +1,4 @@
-package com.falvojr.nd818.p1.model;
+package com.falvojr.nd818.p2.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.falvojr.nd818.p1.view.MovieActivity">
+        tools:context="com.falvojr.nd818.p2.view.MovieActivity">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <com.falvojr.nd818.p1.view.widget.SquareImageView
+                <com.falvojr.nd818.p2.view.widget.SquareImageView
                     android:id="@+id/ivToolbarBg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

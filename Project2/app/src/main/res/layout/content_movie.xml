@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.falvojr.nd818.p1.view.MovieActivity"
+        tools:context="com.falvojr.nd818.p2.view.MovieActivity"
         tools:showIn="@layout/activity_movie">
 
         <LinearLayout

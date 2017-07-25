@@ -1,4 +1,4 @@
-package com.falvojr.nd818.p1;
+package com.falvojr.nd818.p2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

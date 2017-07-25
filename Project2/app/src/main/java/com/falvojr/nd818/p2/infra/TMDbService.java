@@ -1,8 +1,8 @@
-package com.falvojr.nd818.p1.infra;
+package com.falvojr.nd818.p2.infra;
 
-import com.falvojr.nd818.p1.model.Config;
-import com.falvojr.nd818.p1.model.Movie;
-import com.falvojr.nd818.p1.model.MovieList;
+import com.falvojr.nd818.p2.model.Config;
+import com.falvojr.nd818.p2.model.Movie;
+import com.falvojr.nd818.p2.model.MovieList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

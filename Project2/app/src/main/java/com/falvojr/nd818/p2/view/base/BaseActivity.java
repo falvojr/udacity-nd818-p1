@@ -1,4 +1,4 @@
-package com.falvojr.nd818.p1.view.base;
+package com.falvojr.nd818.p2.view.base;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.falvojr.nd818.p1.R;
-import com.falvojr.nd818.p1.model.Movie;
+import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.model.Movie;
 
 /**
  * Base activity with common features.
@@ -16,8 +16,8 @@ import com.falvojr.nd818.p1.model.Movie;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private static final String KEY_IMAGES_BASE_URL = "Project1.ConfigImages.baseUrl";
-    private static final String KEY_SORT = "Project1.Movie.Sort";
+    private static final String KEY_IMAGES_BASE_URL = "images-base-url";
+    private static final String KEY_SORT = "sort";
 
     private String mApiKey;
     private SharedPreferences mSharedPrefs;

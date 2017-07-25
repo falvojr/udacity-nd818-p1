@@ -1,16 +1,14 @@
-package com.falvojr.nd818.p1.view.widget;
+package com.falvojr.nd818.p2.view.widget;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.falvojr.nd818.p1.R;
-import com.falvojr.nd818.p1.databinding.ListItemBinding;
-import com.falvojr.nd818.p1.model.Movie;
+import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.databinding.ListItemBinding;
+import com.falvojr.nd818.p2.model.Movie;
 
 import java.util.List;
 
@@ -31,10 +29,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     public MovieListAdapter(List<Movie> dataSet, OnItemListener onItemListener) {
         mDataSet = dataSet;
         mOnItemListener = onItemListener;
-    }
-
-    public List<Movie> getDataSet() {
-        return mDataSet;
     }
 
     public void setDataSet(List<Movie> mDataSet) {

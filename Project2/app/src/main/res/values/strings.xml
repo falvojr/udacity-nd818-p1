@@ -1,9 +1,9 @@
 <resources>
     <!-- App name -->
-    <string name="app_name">Project 1</string>
+    <string name="app_name">Project 2</string>
 
     <!-- Shared Preferences -->
-    <string name="sp_file_key">com.falvojr.nd818.p1</string>
+    <string name="sp_file_key">com.falvojr.nd818.p2</string>
 
     <!-- Content Descriptions-->
     <string name="cd_movie_image">Movie image</string>
