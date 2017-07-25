@@ -1,6 +1,7 @@
 package com.falvojr.nd818.p1.view.widget;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.falvojr.nd818.p1.R;
+import com.falvojr.nd818.p1.databinding.ListItemBinding;
 import com.falvojr.nd818.p1.model.Movie;
 
 import java.util.List;
@@ -41,16 +43,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final Context context = parent.getContext();
-        final View view = LayoutInflater.from(context).inflate(R.layout.view_holder_movies, parent, false);
-        return new ViewHolder(view);
+        final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        final ListItemBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.list_item, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Movie movie = mDataSet.get(position);
         if (mOnItemListener != null) {
-            mOnItemListener.onBindImageView(holder.ivPoster, movie);
+            mOnItemListener.onBindImageView(holder.mBinding.ivMoviePoster, movie);
         }
     }
 
@@ -60,11 +62,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivPoster;
+        private final ListItemBinding mBinding;
 
-        ViewHolder(View view) {
-            super(view);
-            ivPoster = (ImageView) view.findViewById(R.id.ivMoviePoster);
+        ViewHolder(ListItemBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
         }
     }
 }

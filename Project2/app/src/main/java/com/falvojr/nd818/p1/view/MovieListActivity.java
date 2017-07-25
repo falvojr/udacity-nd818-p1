@@ -2,16 +2,16 @@ package com.falvojr.nd818.p1.view;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.falvojr.nd818.p1.R;
+import com.falvojr.nd818.p1.databinding.ActivityMainBinding;
 import com.falvojr.nd818.p1.infra.TMDbService;
 import com.falvojr.nd818.p1.model.Movie;
 import com.falvojr.nd818.p1.model.MovieList;
@@ -32,29 +32,22 @@ public class MovieListActivity extends BaseActivity {
 
     private static final String TAG = MovieListActivity.class.getSimpleName();
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
 
-    private MovieListAdapter.OnItemListener mOnItemListener = (imageView, movie) -> {
-        final String imageUrl = String.format("%sw185/%s", getImagesBaseUrl(), movie.getPosterPath());
-        Picasso.with(MovieListActivity.this).load(imageUrl).into(imageView);
-
-        imageView.setOnClickListener(v -> {
-            final Intent intent = new Intent(this, MovieActivity.class);
-            intent.putExtra(MovieActivity.KEY_MOVIE, movie);
-            super.startActivity(intent);
-        });
-    };
+    /**
+     * This field is used for data binding. Normally, we would have to call findViewById many
+     * times to get references to the Views in this Activity. With data binding however, we only
+     * need to call DataBindingUtil.setContentView and pass in a Context and a layout, as we do
+     * in onCreate of this class. Then, we can access all of the Views in our layout
+     * programmatically without cluttering up the code with findViewById.
+     */
+    private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.rvMovies);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srlMovies);
-        mSwipeRefreshLayout.setOnRefreshListener(this::loadConfigImages);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding.srlMovies.setOnRefreshListener(this::loadConfigImages);
     }
 
     @Override
@@ -63,12 +56,12 @@ public class MovieListActivity extends BaseActivity {
         if (mAdapter == null) {
             this.loadConfigImages();
         } else {
-            mRecyclerView.setLayoutManager(this.getBestLayoutManager());
+            mBinding.rvMovies.setLayoutManager(this.getBestLayoutManager());
         }
     }
 
     private void loadConfigImages() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        mBinding.srlMovies.setRefreshing(true);
         if (super.getImagesBaseUrl().isEmpty()) {
             TMDbService.getInstance().getApi().getConfig(super.getApiKey())
                     .subscribeOn(Schedulers.io())
@@ -92,21 +85,38 @@ public class MovieListActivity extends BaseActivity {
         } else {
             call = api.getTopRatedMovies(super.getApiKey());
         }
-        call.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resp -> {
                     if (mAdapter == null) {
-                        mAdapter = new MovieListAdapter(resp.getData(), mOnItemListener);
-                        mRecyclerView.setHasFixedSize(true);
-                        mRecyclerView.setAdapter(mAdapter);
+                        this.initAdapter(resp);
                     } else {
-                        mAdapter.setDataSet(resp.getData());
-                        mAdapter.notifyDataSetChanged();
+                        this.refreshAdapter(resp);
                     }
-                    mRecyclerView.setLayoutManager(getBestLayoutManager());
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    mBinding.rvMovies.setLayoutManager(getBestLayoutManager());
+                    mBinding.srlMovies.setRefreshing(false);
                 }, error -> {
                     this.showError(R.string.msg_error_get_movies, error);
                 });
+    }
+
+    private void refreshAdapter(MovieList resp) {
+        mAdapter.setDataSet(resp.getData());
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void initAdapter(MovieList resp) {
+        mAdapter = new MovieListAdapter(resp.getData(), (imageView, movie) -> {
+            final String imageUrl = String.format("%sw185/%s", getImagesBaseUrl(), movie.getPosterPath());
+            Picasso.with(MovieListActivity.this).load(imageUrl).into(imageView);
+            imageView.setOnClickListener(v -> {
+                final Intent intent = new Intent(this, MovieActivity.class);
+                intent.putExtra(MovieActivity.KEY_MOVIE, movie);
+                super.startActivity(intent);
+            });
+        });
+        mBinding.rvMovies.setHasFixedSize(true);
+        mBinding.rvMovies.setAdapter(mAdapter);
     }
 
     private StaggeredGridLayoutManager getBestLayoutManager() {
@@ -119,8 +129,8 @@ public class MovieListActivity extends BaseActivity {
     private void showError(int msgIdRes, Throwable error) {
         final String businessMessage = getString(msgIdRes);
         Log.w(TAG, businessMessage, error);
-        mSwipeRefreshLayout.setRefreshing(false);
-        Snackbar.make(mRecyclerView, businessMessage, Snackbar.LENGTH_LONG).show();
+        mBinding.srlMovies.setRefreshing(false);
+        Snackbar.make(mBinding.rvMovies, businessMessage, Snackbar.LENGTH_LONG).show();
     }
 
     private boolean isPopularSort() {

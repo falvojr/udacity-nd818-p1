@@ -1,11 +1,10 @@
 package com.falvojr.nd818.p1.view;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.falvojr.nd818.p1.R;
+import com.falvojr.nd818.p1.databinding.ActivityMovieBinding;
 import com.falvojr.nd818.p1.model.Movie;
 import com.falvojr.nd818.p1.view.base.BaseActivity;
 import com.squareup.picasso.Picasso;
@@ -22,22 +21,17 @@ public class MovieActivity extends BaseActivity {
 
     public static final String KEY_MOVIE = "MovieActivity.Movie";
 
+    private ActivityMovieBinding mBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mBinding.toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        final ImageView ivToolbarBg = (ImageView) findViewById(R.id.ivToolbarBg);
-        final TextView tvReleaseDate = (TextView) findViewById(R.id.tvReleaseDate);
-        final TextView tvVoteAverage = (TextView) findViewById(R.id.tvVoteAverage);
-        final TextView tvPopularity = (TextView) findViewById(R.id.tvPopularity);
-        final TextView tvOverview = (TextView) findViewById(R.id.tvOverview);
 
         if (getIntent().hasExtra(KEY_MOVIE)) {
             final Movie movie = getIntent().getParcelableExtra(KEY_MOVIE);
@@ -45,15 +39,15 @@ public class MovieActivity extends BaseActivity {
             super.setTitle(movie.getOriginalTitle());
 
             final String imageUrl = String.format("%sw500/%s", getImagesBaseUrl(), movie.getPosterPath());
-            Picasso.with(this).load(imageUrl).into(ivToolbarBg);
+            Picasso.with(this).load(imageUrl).into(mBinding.ivToolbarBg);
 
             final Locale locale = Locale.getDefault();
 
             final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", locale);
-            tvReleaseDate.setText(sdf.format(movie.getReleaseDate()));
-            tvVoteAverage.setText(String.format(locale, "%.2f", movie.getVoteAverage()));
-            tvPopularity.setText(String.format(locale, "%.2f", movie.getPopularity()));
-            tvOverview.setText(movie.getOverview());
+            mBinding.content.tvReleaseDate.setText(sdf.format(movie.getReleaseDate()));
+            mBinding.content.tvVoteAverage.setText(String.format(locale, "%.2f", movie.getVoteAverage()));
+            mBinding.content.tvPopularity.setText(String.format(locale, "%.2f", movie.getPopularity()));
+            mBinding.content.tvOverview.setText(movie.getOverview());
         }
     }
 }
