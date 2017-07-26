@@ -7,11 +7,14 @@
 
     <!-- Content Descriptions-->
     <string name="cd_movie_image">Movie image</string>
-    <string name="cd_toolbar_background">Toolbar background</string>
 
     <!-- Messages -->
     <string name="msg_error_get_movies">Search movies error. Try again later!</string>
     <string name="msg_error_get_config">Load API configurations error. Try again later!</string>
+
+    <!-- Texts -->
+    <string name="txt_duration">%d min</string>
+    <string name="txt_unknown">Unknown</string>
 
     <!-- Menu titles -->
     <string name="menu_sort">Sort</string>

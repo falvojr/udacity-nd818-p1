@@ -1,7 +1,6 @@
 package com.falvojr.nd818.p2.view;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -56,7 +55,7 @@ public class MovieListActivity extends BaseActivity {
         if (mAdapter == null) {
             this.loadConfigImages();
         } else {
-            mBinding.rvMovies.setLayoutManager(this.getBestLayoutManager());
+            mBinding.rvMovies.setLayoutManager(this.getGridLayoutByOrientation());
         }
     }
 
@@ -93,7 +92,7 @@ public class MovieListActivity extends BaseActivity {
                     } else {
                         this.updateAdapter(resp);
                     }
-                    mBinding.rvMovies.setLayoutManager(getBestLayoutManager());
+                    mBinding.rvMovies.setLayoutManager(this.getGridLayoutByOrientation());
                     mBinding.srlMovies.setRefreshing(false);
                 }, error -> {
                     this.showError(R.string.msg_error_get_movies, error);
@@ -119,11 +118,9 @@ public class MovieListActivity extends BaseActivity {
         mBinding.rvMovies.setAdapter(mAdapter);
     }
 
-    private StaggeredGridLayoutManager getBestLayoutManager() {
-        final int currentOrientation = super.getResources().getConfiguration().orientation;
-        final boolean isPortrait = currentOrientation == Configuration.ORIENTATION_PORTRAIT;
-        final int spanCount = isPortrait ? 2 : 3;
-        return new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
+    private StaggeredGridLayoutManager getGridLayoutByOrientation() {
+        int columns = super.getResources().getInteger(R.integer.grid_movies_column_count);
+        return new StaggeredGridLayoutManager(columns, StaggeredGridLayoutManager.VERTICAL);
     }
 
     private void showError(int msgIdRes, Throwable error) {

@@ -26,10 +26,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_release"
                     android:drawablePadding="4dp"
                     android:drawableStart="@drawable/ic_release"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/tvDuration"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_duration"
+                    android:drawablePadding="4dp"
+                    android:drawableStart="@drawable/ic_duration"
                     android:gravity="center_vertical" />
 
                 <TextView
@@ -37,21 +48,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
-                    android:layout_weight="0.75"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_rate"
                     android:drawablePadding="4dp"
                     android:drawableStart="@drawable/ic_rate"
-                    android:gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/tvPopularity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_margin"
-                    android:layout_weight="0.75"
-                    android:drawableLeft="@drawable/ic_counter"
-                    android:drawablePadding="4dp"
-                    android:drawableStart="@drawable/ic_counter"
                     android:gravity="center_vertical" />
             </LinearLayout>
 

@@ -42,11 +42,12 @@ public class MovieActivity extends BaseActivity {
             Picasso.with(this).load(imageUrl).into(mBinding.ivToolbarBg);
 
             final Locale locale = Locale.getDefault();
-
-            final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", locale);
+            final SimpleDateFormat sdf = new SimpleDateFormat("yyyy", locale);
             mBinding.content.tvReleaseDate.setText(sdf.format(movie.getReleaseDate()));
+            final boolean hasDuration = movie.getDuration() != null;
+            final String textDuration = hasDuration ? super.getString(R.string.txt_duration, movie.getDuration()) : super.getString(R.string.txt_unknown);
+            mBinding.content.tvDuration.setText(textDuration);
             mBinding.content.tvVoteAverage.setText(String.format(locale, "%.2f", movie.getVoteAverage()));
-            mBinding.content.tvPopularity.setText(String.format(locale, "%.2f", movie.getPopularity()));
             mBinding.content.tvOverview.setText(movie.getOverview());
         }
     }

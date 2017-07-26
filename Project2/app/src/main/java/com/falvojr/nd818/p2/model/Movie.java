@@ -28,14 +28,14 @@ public class Movie implements Parcelable {
     @SerializedName("poster_path")
     private String posterPath;
 
-    @SerializedName("popularity")
-    private Double popularity;
-
     @SerializedName("vote_average")
     private Double voteAverage;
 
     @SerializedName("release_date")
     private Date releaseDate;
+
+    @SerializedName("runtime")
+    private Integer duration;
 
     public String getOriginalTitle() {
         return originalTitle;
@@ -61,14 +61,6 @@ public class Movie implements Parcelable {
         this.posterPath = posterPath;
     }
 
-    public Double getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Double popularity) {
-        this.popularity = popularity;
-    }
-
     public Double getVoteAverage() {
         return voteAverage;
     }
@@ -85,6 +77,14 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -95,25 +95,26 @@ public class Movie implements Parcelable {
         dest.writeString(this.originalTitle);
         dest.writeString(this.overview);
         dest.writeString(this.posterPath);
-        dest.writeValue(this.popularity);
         dest.writeValue(this.voteAverage);
         dest.writeLong(this.releaseDate != null ? this.releaseDate.getTime() : -1);
+        dest.writeValue(this.duration);
     }
 
     public Movie() {
+        super();
     }
 
     protected Movie(Parcel in) {
         this.originalTitle = in.readString();
         this.overview = in.readString();
         this.posterPath = in.readString();
-        this.popularity = (Double) in.readValue(Double.class.getClassLoader());
         this.voteAverage = (Double) in.readValue(Double.class.getClassLoader());
         long tmpReleaseDate = in.readLong();
         this.releaseDate = tmpReleaseDate == -1 ? null : new Date(tmpReleaseDate);
+        this.duration = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
         public Movie createFromParcel(Parcel source) {
             return new Movie(source);
