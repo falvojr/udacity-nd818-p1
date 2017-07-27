@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.falvojr.nd818.p2.R;
-import com.falvojr.nd818.p2.databinding.ListItemBinding;
+import com.falvojr.nd818.p2.databinding.ItemMovieListBinding;
 import com.falvojr.nd818.p2.model.Movie;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        final ListItemBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.list_item, parent, false);
+        final ItemMovieListBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_movie_list, parent, false);
         return new ViewHolder(binding);
     }
 
@@ -56,9 +56,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ListItemBinding mBinding;
+        private final ItemMovieListBinding mBinding;
 
-        ViewHolder(ListItemBinding binding) {
+        ViewHolder(ItemMovieListBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }

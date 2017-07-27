@@ -20,4 +20,10 @@
     <string name="menu_sort">Sort</string>
     <string name="menu_popular">Popular</string>
     <string name="menu_top_rated">Top-rated</string>
+    <string name="menu_summary">Summary</string>
+    <string name="menu_trailers">Trailers</string>
+    <string name="menu_reviews">Reviews</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

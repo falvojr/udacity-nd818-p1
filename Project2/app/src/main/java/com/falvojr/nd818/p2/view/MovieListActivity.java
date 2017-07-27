@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.falvojr.nd818.p2.R;
 import com.falvojr.nd818.p2.databinding.ActivityMainBinding;
@@ -105,22 +107,24 @@ public class MovieListActivity extends BaseActivity {
     }
 
     private void initAdapter(MovieList resp) {
-        mAdapter = new MovieListAdapter(resp.getData(), (imageView, movie) -> {
-            final String imageUrl = String.format("%sw185/%s", getImagesBaseUrl(), movie.getPosterPath());
-            Picasso.with(MovieListActivity.this).load(imageUrl).into(imageView);
-            imageView.setOnClickListener(v -> {
-                final Intent intent = new Intent(this, MovieActivity.class);
-                intent.putExtra(MovieActivity.KEY_MOVIE, movie);
-                super.startActivity(intent);
-            });
-        });
+        mAdapter = new MovieListAdapter(resp.getData(), this::bindMovieItemImage);
         mBinding.rvMovies.setHasFixedSize(true);
         mBinding.rvMovies.setAdapter(mAdapter);
     }
 
-    private StaggeredGridLayoutManager getGridLayoutByOrientation() {
-        int columns = super.getResources().getInteger(R.integer.grid_movies_column_count);
-        return new StaggeredGridLayoutManager(columns, StaggeredGridLayoutManager.VERTICAL);
+    private void bindMovieItemImage(ImageView imageView, Movie movie) {
+        final Integer width = super.getResources().getInteger(R.integer.movie_list_image_width);
+        Picasso.with(MovieListActivity.this).load(super.getFullImageUrl(movie, width)).into(imageView);
+        imageView.setOnClickListener(v -> {
+            final Intent intent = new Intent(this, MovieActivity.class);
+            intent.putExtra(MovieActivity.KEY_MOVIE, movie);
+            super.startActivity(intent);
+        });
+    }
+
+    private GridLayoutManager getGridLayoutByOrientation() {
+        int columns = super.getResources().getInteger(R.integer.movie_grid_column_count);
+        return new GridLayoutManager(this, columns);
     }
 
     private void showError(int msgIdRes, Throwable error) {

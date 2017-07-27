@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.falvojr.nd818.p2.R;
 import com.falvojr.nd818.p2.model.Movie;
 
+import java.util.Locale;
+
 /**
  * Base activity with common features.
  * <p>
@@ -51,5 +53,10 @@ public class BaseActivity extends AppCompatActivity {
 
     protected String getSort() {
         return mSharedPrefs.getString(KEY_SORT, Movie.Sort.POPULAR.name());
+    }
+
+
+    protected String getFullImageUrl(Movie movie, Integer width) {
+        return String.format(Locale.getDefault(), "%sw%d/%s", getImagesBaseUrl(), width, movie.getPosterPath());
     }
 }

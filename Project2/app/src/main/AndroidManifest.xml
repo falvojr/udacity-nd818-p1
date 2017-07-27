@@ -12,16 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.falvojr.nd818.p2.view.MovieListActivity"
+            android:name=".view.MovieListActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.falvojr.nd818.p2.view.MovieActivity"
-            android:parentActivityName="com.falvojr.nd818.p2.view.MovieListActivity"
+            android:name=".view.MovieActivity"
+            android:parentActivityName=".view.MovieListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
