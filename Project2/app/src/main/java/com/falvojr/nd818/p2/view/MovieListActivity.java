@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,24 +23,12 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Movie list activity.
- * <p>
- * Created by falvojr on 6/5/17.
- */
 public class MovieListActivity extends BaseActivity {
 
     private static final String TAG = MovieListActivity.class.getSimpleName();
 
     private MovieListAdapter mAdapter;
 
-    /**
-     * This field is used for data binding. Normally, we would have to call findViewById many
-     * times to get references to the Views in this Activity. With data binding however, we only
-     * need to call DataBindingUtil.setContentView and pass in a Context and a layout, as we do
-     * in onCreate of this class. Then, we can access all of the Views in our layout
-     * programmatically without cluttering up the code with findViewById.
-     */
     private ActivityMainBinding mBinding;
 
     @Override
