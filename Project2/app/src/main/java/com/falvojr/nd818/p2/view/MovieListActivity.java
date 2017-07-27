@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Menu;
@@ -118,9 +119,9 @@ public class MovieListActivity extends BaseActivity {
         mBinding.rvMovies.setAdapter(mAdapter);
     }
 
-    private StaggeredGridLayoutManager getGridLayoutByOrientation() {
-        int columns = super.getResources().getInteger(R.integer.grid_movies_column_count);
-        return new StaggeredGridLayoutManager(columns, StaggeredGridLayoutManager.VERTICAL);
+    private GridLayoutManager getGridLayoutByOrientation() {
+        int columns = super.getResources().getInteger(R.integer.movie_grid_column_count);
+        return new GridLayoutManager(this, columns);
     }
 
     private void showError(int msgIdRes, Throwable error) {

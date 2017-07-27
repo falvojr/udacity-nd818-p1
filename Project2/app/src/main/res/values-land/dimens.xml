@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="grid_movies_column_count">3</integer>
-
     <!-- Reference on https://www.themoviedb.org/movie -->
-    <dimen name="card_view_movie_width">213dp</dimen>
-    <dimen name="card_view_movie_height">319dp</dimen>
+    <dimen name="card_view_movie_width">190dp</dimen>
+    <dimen name="card_view_movie_height">285dp</dimen>
+
+    <!-- Others (non-dimen) dimensions -->
+    <integer name="movie_grid_column_count">3</integer>
+    <integer name="movie_image_width">500</integer>
 </resources>
