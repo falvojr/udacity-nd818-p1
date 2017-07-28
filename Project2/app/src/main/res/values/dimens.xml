@@ -4,12 +4,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="app_bar_height">240dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
     <!-- Reference on https://www.themoviedb.org/movie -->
-    <dimen name="card_view_movie_width">185dp</dimen>
-    <dimen name="card_view_movie_height">275dp</dimen>
+    <dimen name="card_view_movie_width">182dp</dimen>
+    <dimen name="card_view_movie_height">270dp</dimen>
 
     <!-- Others (non-dimen) dimensions -->
     <integer name="movie_grid_column_count">2</integer>

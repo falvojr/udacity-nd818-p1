@@ -9,12 +9,17 @@
     <string name="cd_movie_image">Movie image</string>
 
     <!-- Messages -->
-    <string name="msg_error_get_movies">Search movies error. Try again later!</string>
+    <string name="msg_error_get_movies">Find movies error. Try again later!</string>
+    <string name="msg_error_get_movie">Get movie error. Try again later!</string>
     <string name="msg_error_get_config">Load API configurations error. Try again later!</string>
+    <string name="msg_error_get_trailers">Find movie trailers error. Try again later!</string>
+    <string name="msg_error_get_reviews">Find movie reviews error. Try again later!</string>
 
     <!-- Texts -->
     <string name="txt_duration">%d min</string>
     <string name="txt_unknown">Unknown</string>
+    <string name="txt_progress_dialog">Progress Dialog</string>
+    <string name="txt_please_wait">Please wait…</string>
 
     <!-- Menu titles -->
     <string name="menu_sort">Sort</string>

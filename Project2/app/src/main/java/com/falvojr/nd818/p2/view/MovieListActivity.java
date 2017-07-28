@@ -3,9 +3,7 @@ package com.falvojr.nd818.p2.view;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -14,10 +12,12 @@ import com.falvojr.nd818.p2.R;
 import com.falvojr.nd818.p2.databinding.ActivityMainBinding;
 import com.falvojr.nd818.p2.infra.TMDbService;
 import com.falvojr.nd818.p2.model.Movie;
-import com.falvojr.nd818.p2.model.MovieList;
+import com.falvojr.nd818.p2.model.Results;
 import com.falvojr.nd818.p2.view.base.BaseActivity;
 import com.falvojr.nd818.p2.view.widget.MovieListAdapter;
 import com.squareup.picasso.Picasso;
+
+import java.util.Collections;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,10 +42,10 @@ public class MovieListActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (mAdapter == null) {
+            this.createAdapter();
             this.loadConfigImages();
-        } else {
-            mBinding.rvMovies.setLayoutManager(this.getGridLayoutByOrientation());
         }
+        mBinding.rvMovies.setLayoutManager(this.getGridLayoutByOrientation());
     }
 
     private void loadConfigImages() {
@@ -58,7 +58,8 @@ public class MovieListActivity extends BaseActivity {
                         super.putImagesBaseUrl(resp.getConfigImages().getBaseUrl());
                         this.loadMovies();
                     }, error -> {
-                        this.showError(R.string.msg_error_get_config, error);
+                        super.showError(R.string.msg_error_get_config, error);
+                        mBinding.srlMovies.setRefreshing(false);
                     });
         } else {
             this.loadMovies();
@@ -66,37 +67,28 @@ public class MovieListActivity extends BaseActivity {
     }
 
     private void loadMovies() {
-        final TMDbService.Api api = TMDbService.getInstance().getApi();
-        final Observable<MovieList> call;
+        final Observable<Results<Movie>> call;
         if (this.isPopularSort()) {
-            call = api.getPopularMovies(super.getApiKey());
+            call = TMDbService.getInstance().getApi().getPopularMovies(super.getApiKey());
         } else {
-            call = api.getTopRatedMovies(super.getApiKey());
+            call = TMDbService.getInstance().getApi().getTopRatedMovies(super.getApiKey());
         }
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(resp -> {
-                    if (mAdapter == null) {
-                        this.initAdapter(resp);
-                    } else {
-                        this.updateAdapter(resp);
-                    }
-                    mBinding.rvMovies.setLayoutManager(this.getGridLayoutByOrientation());
-                    mBinding.srlMovies.setRefreshing(false);
-                }, error -> {
-                    this.showError(R.string.msg_error_get_movies, error);
-                });
+                .subscribe(this::updateAdapter,
+                        error -> super.showError(R.string.msg_error_get_movies, error),
+                        () -> mBinding.srlMovies.setRefreshing(false));
     }
 
-    private void updateAdapter(MovieList resp) {
-        mAdapter.setDataSet(resp.getData());
-        mAdapter.notifyDataSetChanged();
-    }
-
-    private void initAdapter(MovieList resp) {
-        mAdapter = new MovieListAdapter(resp.getData(), this::bindMovieItemImage);
+    private void createAdapter() {
+        mAdapter = new MovieListAdapter(Collections.emptyList(), this::bindMovieItemImage);
         mBinding.rvMovies.setHasFixedSize(true);
         mBinding.rvMovies.setAdapter(mAdapter);
+    }
+
+    private void updateAdapter(Results<Movie> results) {
+        mAdapter.setDataSet(results.getData());
+        mAdapter.notifyDataSetChanged();
     }
 
     private void bindMovieItemImage(ImageView imageView, Movie movie) {
@@ -112,13 +104,6 @@ public class MovieListActivity extends BaseActivity {
     private GridLayoutManager getGridLayoutByOrientation() {
         int columns = super.getResources().getInteger(R.integer.movie_grid_column_count);
         return new GridLayoutManager(this, columns);
-    }
-
-    private void showError(int msgIdRes, Throwable error) {
-        final String businessMessage = getString(msgIdRes);
-        Log.w(TAG, businessMessage, error);
-        mBinding.srlMovies.setRefreshing(false);
-        Snackbar.make(mBinding.rvMovies, businessMessage, Snackbar.LENGTH_LONG).show();
     }
 
     private boolean isPopularSort() {

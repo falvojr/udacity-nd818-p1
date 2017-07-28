@@ -40,6 +40,7 @@ ext {
     retrofitVersion = '2.3.0'
     okhttpVersion = '3.8.0'
     picassoVersion = '2.5.2'
+    materialDialogVersion = '0.9.4.5'
 
     espressoVersion = '2.2.2'
     junitVersion = '4.12'
@@ -70,13 +71,12 @@ dependencies {
     // Picasso (by Square)
     compile "com.squareup.picasso:picasso:${picassoVersion}"
 
+    // Material Dialogs (3rd party lib)
+    compile "com.afollestad.material-dialogs:core:${materialDialogVersion}"
+
     // Test dependencies (native)
     androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile "junit:junit:${junitVersion}"
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:support-vector-drawable:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
 }

@@ -19,6 +19,9 @@ public class Movie implements Parcelable {
         TOP_RATED
     }
 
+    @SerializedName("id")
+    private Long id;
+
     @SerializedName("original_title")
     private String originalTitle;
 
@@ -36,6 +39,14 @@ public class Movie implements Parcelable {
 
     @SerializedName("runtime")
     private Integer duration;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getOriginalTitle() {
         return originalTitle;
@@ -92,6 +103,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
         dest.writeString(this.originalTitle);
         dest.writeString(this.overview);
         dest.writeString(this.posterPath);
@@ -105,6 +117,7 @@ public class Movie implements Parcelable {
     }
 
     protected Movie(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.originalTitle = in.readString();
         this.overview = in.readString();
         this.posterPath = in.readString();

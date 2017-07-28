@@ -2,9 +2,13 @@ package com.falvojr.nd818.p2.infra;
 
 import com.falvojr.nd818.p2.model.Config;
 import com.falvojr.nd818.p2.model.Movie;
-import com.falvojr.nd818.p2.model.MovieList;
+import com.falvojr.nd818.p2.model.Results;
+import com.falvojr.nd818.p2.model.Review;
+import com.falvojr.nd818.p2.model.Trailer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -40,13 +44,19 @@ public class TMDbService {
         Observable<Config> getConfig(@Query("api_key") String apiKey);
 
         @GET("movie/popular")
-        Observable<MovieList> getPopularMovies(@Query("api_key") String apiKey);
+        Observable<Results<Movie>> getPopularMovies(@Query("api_key") String apiKey);
 
         @GET("movie/top_rated")
-        Observable<MovieList> getTopRatedMovies(@Query("api_key") String apiKey);
+        Observable<Results<Movie>> getTopRatedMovies(@Query("api_key") String apiKey);
 
         @GET("movie/{id}")
-        Observable<Movie> getMovie(@Query("api_key") String apiKey, @Path("id") int movieId);
+        Observable<Movie> getMovie(@Path("id") Long movieId, @Query("api_key") String apiKey);
+
+        @GET("movie/{id}/reviews")
+        Observable<Results<Review>> getMovieReviews(@Path("id") Long movieId, @Query("api_key") String apiKey);
+
+        @GET("movie/{id}/videos")
+        Observable<Results<Trailer>> getMovieTrailers(@Path("id") Long movieId, @Query("api_key") String apiKey);
     }
 
     private Api mApi;

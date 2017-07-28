@@ -9,16 +9,16 @@ import java.util.List;
  * <p>
  * Created by falvojr on 6/4/17.
  */
-public class MovieList {
+public class Results<T> {
 
     @SerializedName("results")
-    private List<Movie> data;
+    private List<T> data;
 
-    public List<Movie> getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(List<Movie> data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }
