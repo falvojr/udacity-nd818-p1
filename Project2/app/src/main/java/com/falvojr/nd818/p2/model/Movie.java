@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Movie entity from TMDb API.
@@ -39,6 +40,10 @@ public class Movie implements Parcelable {
 
     @SerializedName("runtime")
     private Integer duration;
+
+    private List<Trailer> trailers;
+
+    private List<Review> reviews;
 
     public Long getId() {
         return id;
@@ -96,6 +101,22 @@ public class Movie implements Parcelable {
         this.duration = duration;
     }
 
+    public List<Trailer> getTrailers() {
+        return trailers;
+    }
+
+    public void setTrailers(List<Trailer> trailers) {
+        this.trailers = trailers;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -110,10 +131,11 @@ public class Movie implements Parcelable {
         dest.writeValue(this.voteAverage);
         dest.writeLong(this.releaseDate != null ? this.releaseDate.getTime() : -1);
         dest.writeValue(this.duration);
+        dest.writeTypedList(this.trailers);
+        dest.writeTypedList(this.reviews);
     }
 
     public Movie() {
-        super();
     }
 
     protected Movie(Parcel in) {
@@ -125,6 +147,8 @@ public class Movie implements Parcelable {
         long tmpReleaseDate = in.readLong();
         this.releaseDate = tmpReleaseDate == -1 ? null : new Date(tmpReleaseDate);
         this.duration = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.trailers = in.createTypedArrayList(Trailer.CREATOR);
+        this.reviews = in.createTypedArrayList(Review.CREATOR);
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {

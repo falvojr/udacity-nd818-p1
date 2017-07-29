@@ -71,9 +71,6 @@ dependencies {
     // Picasso (by Square)
     compile "com.squareup.picasso:picasso:${picassoVersion}"
 
-    // Material Dialogs (3rd party lib)
-    compile "com.afollestad.material-dialogs:core:${materialDialogVersion}"
-
     // Test dependencies (native)
     androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
         exclude group: 'com.android.support', module: 'support-annotations'
