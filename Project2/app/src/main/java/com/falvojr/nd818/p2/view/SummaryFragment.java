@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.data.http.TMDbService;
 import com.falvojr.nd818.p2.databinding.FragmentSummaryBinding;
-import com.falvojr.nd818.p2.infra.TMDbService;
 import com.falvojr.nd818.p2.model.Movie;
 import com.falvojr.nd818.p2.view.base.BaseFragment;
 

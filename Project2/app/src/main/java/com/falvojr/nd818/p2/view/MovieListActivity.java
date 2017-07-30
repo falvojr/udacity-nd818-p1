@@ -9,8 +9,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.data.http.TMDbService;
+import com.falvojr.nd818.p2.data.prefs.TMDbPreferences;
 import com.falvojr.nd818.p2.databinding.ActivityMainBinding;
-import com.falvojr.nd818.p2.infra.TMDbService;
 import com.falvojr.nd818.p2.model.Movie;
 import com.falvojr.nd818.p2.model.Results;
 import com.falvojr.nd818.p2.view.base.BaseActivity;
@@ -50,12 +51,12 @@ public class MovieListActivity extends BaseActivity {
 
     private void loadConfigImages() {
         mBinding.srlMovies.setRefreshing(true);
-        if (super.getImagesBaseUrl().isEmpty()) {
+        if (TMDbPreferences.getInstance().getImagesBaseUrl(this).isEmpty()) {
             TMDbService.getInstance().getApi().getConfig(super.getApiKey())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(resp -> {
-                        super.putImagesBaseUrl(resp.getConfigImages().getBaseUrl());
+                        TMDbPreferences.getInstance().putImagesBaseUrl(this, resp.getConfigImages().getBaseUrl());
                         this.loadMovies();
                     }, error -> {
                         super.showError(R.string.msg_error_get_config, error);
@@ -81,7 +82,20 @@ public class MovieListActivity extends BaseActivity {
     }
 
     private void createAdapter() {
-        mAdapter = new MovieListAdapter(Collections.emptyList(), this::bindMovieItemImage);
+        mAdapter = new MovieListAdapter(Collections.emptyList(), new MovieListAdapter.OnItemListener() {
+            @Override
+            public void onLoadPoster(ImageView imageView, String posterPath) {
+                final Integer width = getResources().getInteger(R.integer.movie_list_image_width);
+                Picasso.with(MovieListActivity.this).load(getFullImageUrl(posterPath, width)).into(imageView);
+            }
+
+            @Override
+            public void onClick(Movie movie) {
+                final Intent intent = new Intent(MovieListActivity.this, MovieActivity.class);
+                intent.putExtra(MovieActivity.KEY_MOVIE, movie);
+                startActivity(intent);
+            }
+        });
         mBinding.rvMovies.setHasFixedSize(true);
         mBinding.rvMovies.setAdapter(mAdapter);
     }
@@ -91,23 +105,13 @@ public class MovieListActivity extends BaseActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    private void bindMovieItemImage(ImageView imageView, Movie movie) {
-        final Integer width = super.getResources().getInteger(R.integer.movie_list_image_width);
-        Picasso.with(MovieListActivity.this).load(super.getFullImageUrl(movie, width)).into(imageView);
-        imageView.setOnClickListener(v -> {
-            final Intent intent = new Intent(this, MovieActivity.class);
-            intent.putExtra(MovieActivity.KEY_MOVIE, movie);
-            super.startActivity(intent);
-        });
-    }
-
     private GridLayoutManager getGridLayoutByOrientation() {
         int columns = super.getResources().getInteger(R.integer.movie_grid_column_count);
         return new GridLayoutManager(this, columns);
     }
 
     private boolean isPopularSort() {
-        return Movie.Sort.POPULAR.name().equals(super.getSort());
+        return Movie.Sort.POPULAR.name().equals(TMDbPreferences.getInstance().getSort(this));
     }
 
     @Override
@@ -122,10 +126,10 @@ public class MovieListActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mPopular:
-                super.putSort(Movie.Sort.POPULAR);
+                TMDbPreferences.getInstance().putSort(this, Movie.Sort.POPULAR);
                 break;
             case R.id.mTopRated:
-                super.putSort(Movie.Sort.TOP_RATED);
+                TMDbPreferences.getInstance().putSort(this, Movie.Sort.TOP_RATED);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

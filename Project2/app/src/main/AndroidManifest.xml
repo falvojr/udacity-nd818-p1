@@ -28,6 +28,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.falvojr.nd818.p2.view.MovieListActivity" />
         </activity>
+        <!-- My ContentProvider -->
+        <provider
+            android:name=".data.provider.TMDbProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false"/>
     </application>
 
 </manifest>

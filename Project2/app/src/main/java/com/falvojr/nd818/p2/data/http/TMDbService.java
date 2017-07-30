@@ -1,4 +1,4 @@
-package com.falvojr.nd818.p2.infra;
+package com.falvojr.nd818.p2.data.http;
 
 import com.falvojr.nd818.p2.model.Config;
 import com.falvojr.nd818.p2.model.Movie;
@@ -7,8 +7,6 @@ import com.falvojr.nd818.p2.model.Review;
 import com.falvojr.nd818.p2.model.Trailer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;

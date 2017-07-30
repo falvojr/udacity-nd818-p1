@@ -8,12 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.data.http.TMDbService;
 import com.falvojr.nd818.p2.databinding.FragmentReviewBinding;
-import com.falvojr.nd818.p2.infra.TMDbService;
 import com.falvojr.nd818.p2.model.Movie;
-import com.falvojr.nd818.p2.model.Review;
-import com.falvojr.nd818.p2.view.base.BaseAdapter;
 import com.falvojr.nd818.p2.view.base.BaseFragment;
+import com.falvojr.nd818.p2.view.widget.MovieReviewAdapter;
 
 import java.util.Collections;
 
@@ -23,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ReviewFragment extends BaseFragment<MovieActivity> {
 
     private FragmentReviewBinding mBinding;
-    private BaseAdapter<Review> mAdapter;
+    private MovieReviewAdapter mAdapter;
 
     public ReviewFragment() {
         // Required empty public constructor
@@ -34,7 +33,7 @@ public class ReviewFragment extends BaseFragment<MovieActivity> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_review, container, false);
 
-        mAdapter = new BaseAdapter<>(Collections.emptyList());
+        mAdapter = new MovieReviewAdapter(Collections.emptyList());
         mBinding.rvReviews.setLayoutManager(new LinearLayoutManager(super.getContext()));
         mBinding.rvReviews.setHasFixedSize(true);
         mBinding.rvReviews.setAdapter(mAdapter);

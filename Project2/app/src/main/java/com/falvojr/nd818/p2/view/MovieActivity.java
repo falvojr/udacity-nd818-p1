@@ -72,7 +72,7 @@ public class MovieActivity extends BaseActivity implements BottomNavigationView.
 
     private void bindMovieImage() {
         final Integer width = super.getResources().getInteger(R.integer.movie_image_width);
-        Picasso.with(this).load(super.getFullImageUrl(mMovie, width)).into(mBinding.ivToolbarBg);
+        Picasso.with(this).load(super.getFullImageUrl(mMovie.getPosterPath(), width)).into(mBinding.ivToolbarBg);
     }
 
     @Override

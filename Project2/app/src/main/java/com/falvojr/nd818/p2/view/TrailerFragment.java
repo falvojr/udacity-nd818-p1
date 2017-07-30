@@ -1,5 +1,6 @@
 package com.falvojr.nd818.p2.view;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.data.http.TMDbService;
 import com.falvojr.nd818.p2.databinding.FragmentTrailerBinding;
-import com.falvojr.nd818.p2.infra.TMDbService;
 import com.falvojr.nd818.p2.model.Movie;
-import com.falvojr.nd818.p2.model.Trailer;
-import com.falvojr.nd818.p2.view.base.BaseAdapter;
 import com.falvojr.nd818.p2.view.base.BaseFragment;
+import com.falvojr.nd818.p2.view.widget.MovieTrailerAdapter;
 
 import java.util.Collections;
 
@@ -23,7 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 public class TrailerFragment extends BaseFragment<MovieActivity> {
 
     FragmentTrailerBinding mBinding;
-    private BaseAdapter<Trailer> mAdapter;
+    private MovieTrailerAdapter mAdapter;
 
     public TrailerFragment() {
         // Required empty public constructor
@@ -34,7 +34,7 @@ public class TrailerFragment extends BaseFragment<MovieActivity> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_trailer, container, false);
 
-        mAdapter = new BaseAdapter<>(Collections.emptyList());
+        mAdapter = new MovieTrailerAdapter(Collections.emptyList(), uri -> startActivity(new Intent(Intent.ACTION_VIEW, uri)));
         mBinding.rvTrailers.setLayoutManager(new LinearLayoutManager(super.getContext()));
         mBinding.rvTrailers.setHasFixedSize(true);
         mBinding.rvTrailers.setAdapter(mAdapter);

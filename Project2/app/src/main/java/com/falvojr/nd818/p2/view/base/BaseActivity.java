@@ -1,7 +1,5 @@
 package com.falvojr.nd818.p2.view.base;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -12,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.falvojr.nd818.p2.R;
-import com.falvojr.nd818.p2.model.Movie;
+import com.falvojr.nd818.p2.data.prefs.TMDbPreferences;
 
 import java.util.Locale;
 
@@ -24,11 +22,8 @@ import java.util.Locale;
 public class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
-    private static final String KEY_IMAGES_BASE_URL = "images-base-url";
-    private static final String KEY_SORT = "sort";
 
     private String mApiKey;
-    private SharedPreferences mSharedPrefs;
 
     public String getApiKey() {
         return mApiKey;
@@ -40,8 +35,6 @@ public class BaseActivity extends AppCompatActivity {
 
         // Stored on secrets.xml resource
         mApiKey = getString(R.string.tmdb_api_key);
-
-        mSharedPrefs = super.getSharedPreferences(getString(R.string.sp_file_key), Context.MODE_PRIVATE);
     }
 
     public void showError(int msgIdRes, Throwable error) {
@@ -50,24 +43,9 @@ public class BaseActivity extends AppCompatActivity {
         Snackbar.make(this.getContentView(), businessMessage, Snackbar.LENGTH_LONG).show();
     }
 
-    protected void putImagesBaseUrl(String baseUrl) {
-        mSharedPrefs.edit().putString(KEY_IMAGES_BASE_URL, baseUrl).apply();
-    }
-
-    protected String getImagesBaseUrl() {
-        return mSharedPrefs.getString(KEY_IMAGES_BASE_URL, "");
-    }
-
-    protected void putSort(Movie.Sort sort) {
-        mSharedPrefs.edit().putString(KEY_SORT, sort.name()).apply();
-    }
-
-    protected String getSort() {
-        return mSharedPrefs.getString(KEY_SORT, Movie.Sort.POPULAR.name());
-    }
-
-    protected String getFullImageUrl(Movie movie, Integer width) {
-        return String.format(Locale.getDefault(), "%sw%d/%s", getImagesBaseUrl(), width, movie.getPosterPath());
+    protected String getFullImageUrl(String path, Integer width) {
+        final String imagesBaseUrl = TMDbPreferences.getInstance().getImagesBaseUrl(this);
+        return String.format(Locale.getDefault(), "%sw%d/%s", imagesBaseUrl, width, path);
     }
 
     protected void replaceFragment(String fragmentName) {
