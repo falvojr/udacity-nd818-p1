@@ -49,13 +49,15 @@ public class SummaryFragment extends BaseFragment<MovieActivity> {
     }
 
     private void findMovieDetails(final Movie movie) {
+        super.showProgress(mBinding.clContent, mBinding.progress.clContent);
         TMDbService.getInstance().getApi().getMovie(movie.getId(), super.getBaseActivity().getApiKey())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieDetails -> {
-                    movie.setDuration(movieDetails.getDuration());
-                    this.fillSummary(movie);
-                }, error -> super.getBaseActivity().showError(R.string.msg_error_get_movie, error));
+                            movie.setDuration(movieDetails.getDuration());
+                            this.fillSummary(movie);
+                        }, error -> super.getBaseActivity().showError(R.string.msg_error_get_movie, error)
+                        , () -> super.hideProgress(mBinding.clContent, mBinding.progress.clContent));
     }
 
     private void fillSummary(Movie movie) {

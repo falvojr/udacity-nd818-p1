@@ -22,6 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ReviewFragment extends BaseFragment<MovieActivity> {
 
+    private FragmentReviewBinding mBinding;
     private BaseAdapter<Review> mAdapter;
 
     public ReviewFragment() {
@@ -31,14 +32,14 @@ public class ReviewFragment extends BaseFragment<MovieActivity> {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentReviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_review, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_review, container, false);
 
         mAdapter = new BaseAdapter<>(Collections.emptyList());
-        binding.rvReviews.setLayoutManager(new LinearLayoutManager(super.getContext()));
-        binding.rvReviews.setHasFixedSize(true);
-        binding.rvReviews.setAdapter(mAdapter);
+        mBinding.rvReviews.setLayoutManager(new LinearLayoutManager(super.getContext()));
+        mBinding.rvReviews.setHasFixedSize(true);
+        mBinding.rvReviews.setAdapter(mAdapter);
 
-        return binding.getRoot();
+        return mBinding.getRoot();
     }
 
     @Override
@@ -57,13 +58,15 @@ public class ReviewFragment extends BaseFragment<MovieActivity> {
     }
 
     private void findMovieReviews(final Movie movie) {
+        super.showProgress(mBinding.rvReviews, mBinding.progress.clContent);
         TMDbService.getInstance().getApi().getMovieReviews(movie.getId(), super.getBaseActivity().getApiKey())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(results -> {
-                    movie.setReviews(results.getData());
-                    this.fillReviews(movie);
-                }, error -> super.getBaseActivity().showError(R.string.msg_error_get_reviews, error));
+                            movie.setReviews(results.getData());
+                            this.fillReviews(movie);
+                        }, error -> super.getBaseActivity().showError(R.string.msg_error_get_reviews, error)
+                        , () -> super.hideProgress(mBinding.rvReviews, mBinding.progress.clContent));
     }
 
     private void fillReviews(Movie movie) {

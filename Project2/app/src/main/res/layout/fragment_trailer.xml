@@ -3,9 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.falvojr.nd818.p2.view.TrailerFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTrailers"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTrailers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            android:id="@+id/progress"
+            layout="@layout/progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </layout>
