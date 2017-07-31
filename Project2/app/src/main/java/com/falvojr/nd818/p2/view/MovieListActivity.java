@@ -106,8 +106,9 @@ public class MovieListActivity extends BaseActivity {
     }
 
     private GridLayoutManager getGridLayoutByOrientation() {
-        int columns = super.getResources().getInteger(R.integer.movie_grid_column_count);
-        return new GridLayoutManager(this, columns);
+        final int factor = super.getResources().getInteger(R.integer.movie_grid_column_factor);
+        final int columns = super.getResources().getInteger(R.integer.movie_grid_column_count);
+        return new GridLayoutManager(this, factor * columns);
     }
 
     private boolean isPopularSort() {

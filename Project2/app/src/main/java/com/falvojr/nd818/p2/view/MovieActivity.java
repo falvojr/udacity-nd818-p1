@@ -1,12 +1,17 @@
 package com.falvojr.nd818.p2.view;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.MenuItem;
 
 import com.falvojr.nd818.p2.R;
+import com.falvojr.nd818.p2.data.provider.TMDbContract.TMDbEntry;
 import com.falvojr.nd818.p2.databinding.ActivityMovieBinding;
 import com.falvojr.nd818.p2.model.Movie;
 import com.falvojr.nd818.p2.view.base.BaseActivity;
@@ -16,6 +21,8 @@ public class MovieActivity extends BaseActivity implements BottomNavigationView.
 
     public static final String KEY_MOVIE = "MovieActivity.mMovie";
     private static final String KEY_NAV_SELECTED_ITEM = "MovieActivity.mNavSelectedItem";
+    public static final int FALSE = 0;
+    public static final int TRUE = 1;
 
     private Movie mMovie;
     private ActivityMovieBinding mBinding;
@@ -39,6 +46,7 @@ public class MovieActivity extends BaseActivity implements BottomNavigationView.
             mMovie = super.getIntent().getParcelableExtra(KEY_MOVIE);
             super.setTitle(mMovie.getOriginalTitle());
             this.bindMovieImage();
+            this.bindFabFavorite();
         }
         mBinding.navigation.setOnNavigationItemSelectedListener(this);
     }
@@ -70,11 +78,6 @@ public class MovieActivity extends BaseActivity implements BottomNavigationView.
         return true;
     }
 
-    private void bindMovieImage() {
-        final Integer width = super.getResources().getInteger(R.integer.movie_image_width);
-        Picasso.with(this).load(super.getFullImageUrl(mMovie.getPosterPath(), width)).into(mBinding.ivToolbarBg);
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -87,5 +90,60 @@ public class MovieActivity extends BaseActivity implements BottomNavigationView.
         super.onRestoreInstanceState(savedInstanceState);
         mMovie = savedInstanceState.getParcelable(KEY_MOVIE);
         mNavSelectedItem = savedInstanceState.getInt(KEY_NAV_SELECTED_ITEM);
+    }
+
+    private void bindMovieImage() {
+        final Integer width = super.getResources().getInteger(R.integer.movie_image_width);
+        Picasso.with(this).load(super.getFullImageUrl(mMovie.getPosterPath(), width)).into(mBinding.ivToolbarBg);
+    }
+
+
+    private void bindFabFavorite() {
+        this.bindFabFavoriteDrawable();
+        mBinding.fabFavorite.setOnClickListener(v -> {
+            // Defines an object to contain the new values to insert
+            final ContentValues mNewValues = new ContentValues();
+            mNewValues.put(TMDbEntry.COLUMN_MOVIE_ID, mMovie.getId());
+            mNewValues.put(TMDbEntry.COLUMN_FAVORITE, this.isFavorite() ? FALSE : TRUE);
+
+            super.getContentResolver().insert(TMDbEntry.CONTENT_URI, mNewValues);
+
+            this.bindFabFavoriteDrawable();
+        });
+    }
+
+    private void bindFabFavoriteDrawable() {
+        final int favoriteDrawable = this.isFavorite() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
+        final Drawable drawable = AppCompatResources.getDrawable(this, favoriteDrawable);
+        mBinding.fabFavorite.setImageDrawable(drawable);
+    }
+
+    private boolean isFavorite() {
+        // A "projection" defines the columns that will be returned for each row
+        final String[] mProjection = {TMDbEntry._ID, TMDbEntry.COLUMN_MOVIE_ID, TMDbEntry.COLUMN_FAVORITE};
+        // Defines a string to contain the selection clause
+        final String mSelectionClause = TMDbEntry.COLUMN_MOVIE_ID + " = ?";
+        // Initializes an array to contain selection arguments
+        final String[] mSelectionArgs = {mMovie.getId().toString()};
+        // Defines a string to contain the sort order
+        final String mSortOrder = "";
+
+        // Queries the user dictionary and returns results
+        final Cursor mCursor = getContentResolver().query(
+                TMDbEntry.CONTENT_URI,  // The content URI of the movies table
+                mProjection,            // The columns to return for each row
+                mSelectionClause,       // Selection criteria
+                mSelectionArgs,         // Selection criteria
+                mSortOrder);            // The sort order for the returned rows
+
+        boolean isFavorite = false;
+        if (mCursor != null) {
+            final int indexFavorite = mCursor.getColumnIndex(TMDbEntry.COLUMN_FAVORITE);
+            while (mCursor.moveToNext()) {
+                isFavorite = mCursor.getInt(indexFavorite) == TRUE;
+            }
+            mCursor.close();
+        }
+        return isFavorite;
     }
 }

@@ -1,10 +1,13 @@
 package com.falvojr.nd818.p2.view;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.falvojr.nd818.p2.R;
 import com.falvojr.nd818.p2.data.http.TMDbService;
@@ -30,7 +33,18 @@ public class SummaryFragment extends BaseFragment<MovieActivity> {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_summary, container, false);
+        this.bindDrawableTextView(mBinding.tvReleaseDate, R.drawable.ic_release_date);
+        this.bindDrawableTextView(mBinding.tvDuration, R.drawable.ic_duration);
+        this.bindDrawableTextView(mBinding.tvVoteAverage, R.drawable.ic_vote_average);
         return mBinding.getRoot();
+    }
+
+    /**
+     * @see <a href="https://stackoverflow.com/a/40743734/3072570">See more</a>
+     */
+    private void bindDrawableTextView(TextView textView, int iconRes) {
+        final Drawable leftDrawable = AppCompatResources.getDrawable(super.getContext(), iconRes);
+        textView.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null);
     }
 
     @Override

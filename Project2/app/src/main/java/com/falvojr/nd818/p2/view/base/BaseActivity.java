@@ -32,7 +32,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Stored on secrets.xml resource
         mApiKey = getString(R.string.tmdb_api_key);
     }

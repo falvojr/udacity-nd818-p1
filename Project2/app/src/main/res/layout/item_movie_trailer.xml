@@ -18,7 +18,7 @@
             app:layout_constraintRight_toLeftOf="@+id/ivTrailer"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/ivTrailer"
             android:layout_width="@dimen/button_height"
             android:layout_height="@dimen/button_height"

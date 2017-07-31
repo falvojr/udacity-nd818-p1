@@ -10,6 +10,7 @@
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/aplToolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
             android:fitsSystemWindows="true"
@@ -50,7 +51,8 @@
             <FrameLayout
                 android:id="@+id/flContent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/fragment_margin" />
 
         </android.support.v4.widget.NestedScrollView>
 
@@ -61,6 +63,17 @@
             android:layout_gravity="bottom"
             android:background="?android:attr/windowBackground"
             app:menu="@menu/navigation" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:elevation="8dp"
+            app:layout_anchor="@id/aplToolbar"
+            app:layout_anchorGravity="bottom|right|end"
+            app:srcCompat="@drawable/ic_favorite_on" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

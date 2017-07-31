@@ -17,7 +17,7 @@
             card_view:layout_constraintRight_toRightOf="parent"
             card_view:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ivMoviePoster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
