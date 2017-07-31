@@ -120,29 +120,29 @@ public class MovieActivity extends BaseActivity implements BottomNavigationView.
 
     private boolean isFavorite() {
         // A "projection" defines the columns that will be returned for each row
-        final String[] mProjection = {TMDbEntry._ID, TMDbEntry.COLUMN_MOVIE_ID, TMDbEntry.COLUMN_FAVORITE};
+        final String[] projection = {TMDbEntry._ID, TMDbEntry.COLUMN_MOVIE_ID, TMDbEntry.COLUMN_FAVORITE};
         // Defines a string to contain the selection clause
-        final String mSelectionClause = TMDbEntry.COLUMN_MOVIE_ID + " = ?";
+        final String selectionClause = TMDbEntry.COLUMN_MOVIE_ID + " = ?";
         // Initializes an array to contain selection arguments
-        final String[] mSelectionArgs = {mMovie.getId().toString()};
+        final String[] selectionArgs = {mMovie.getId().toString()};
         // Defines a string to contain the sort order
-        final String mSortOrder = "";
+        final String sortOrder = "";
 
         // Queries the user dictionary and returns results
-        final Cursor mCursor = getContentResolver().query(
+        final Cursor cursor = getContentResolver().query(
                 TMDbEntry.CONTENT_URI,  // The content URI of the movies table
-                mProjection,            // The columns to return for each row
-                mSelectionClause,       // Selection criteria
-                mSelectionArgs,         // Selection criteria
-                mSortOrder);            // The sort order for the returned rows
+                projection,            // The columns to return for each row
+                selectionClause,       // Selection criteria
+                selectionArgs,         // Selection criteria
+                sortOrder);            // The sort order for the returned rows
 
         boolean isFavorite = false;
-        if (mCursor != null) {
-            final int indexFavorite = mCursor.getColumnIndex(TMDbEntry.COLUMN_FAVORITE);
-            while (mCursor.moveToNext()) {
-                isFavorite = mCursor.getInt(indexFavorite) == TRUE;
+        if (cursor != null) {
+            final int indexFavorite = cursor.getColumnIndex(TMDbEntry.COLUMN_FAVORITE);
+            while (cursor.moveToNext()) {
+                isFavorite = cursor.getInt(indexFavorite) == TRUE;
             }
-            mCursor.close();
+            cursor.close();
         }
         return isFavorite;
     }
