@@ -46,7 +46,7 @@ public class MovieListActivity extends BaseActivity {
             this.createAdapter();
             this.loadConfigImages();
         }
-        mBinding.rvMovies.setLayoutManager(this.getGridLayoutByOrientation());
+        mBinding.rvMovies.setLayoutManager(this.getGridLayoutByLandAndSw600dpRes());
     }
 
     private void loadConfigImages() {
@@ -105,7 +105,7 @@ public class MovieListActivity extends BaseActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    private GridLayoutManager getGridLayoutByOrientation() {
+    private GridLayoutManager getGridLayoutByLandAndSw600dpRes() {
         final int factor = super.getResources().getInteger(R.integer.movie_grid_column_factor);
         final int columns = super.getResources().getInteger(R.integer.movie_grid_column_count);
         return new GridLayoutManager(this, factor * columns);
