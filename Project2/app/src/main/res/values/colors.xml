@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="colorPrimary">#673ab7</color>          <!-- Material Color Palette: 500 -->
-    <color name="colorPrimaryDark">#512da8</color>      <!-- Material Color Palette: 700 -->
-    <color name="colorAccent">#69f0ae</color>           <!-- Material Color Palette: A200 -->
-
-    <color name="materialIcon">#38000000</color>        <!-- Material Design Inactive Icon: Opacity 38% -->
-</resources>
